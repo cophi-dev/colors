@@ -8,19 +8,18 @@ import openseaLogo from "./assets/OS.svg";
 // Constants
 const TWITTER_HANDLE = "_cophi_";
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
-const OPENSEA_LINK = "https://testnets.opensea.io/collection/colors-7stpthribw";
+const OPENSEA_LINK = "https://testnets.opensea.io/collection/colors-v8";
 const TOTAL_MINT_COUNT = 500;
 
-const CONTRACT_ADDRESS = "0x8B2749009B11Ffe89e2e0CefFEe18fe60D8462e7";
+const CONTRACT_ADDRESS = "0x01a1aB765928F0a6C0EFdd5A214A11fAa3B4E3E6";
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [totalMintCount, setTotalMintCount] = useState(0);
 
   const checkIfWalletIsConnected = async () => {
     const { ethereum } = window;
-    let mint_count = await CONTRACT_ADDRESS.getTotalNFTsMintedSoFar();
-    console.log(mint_count);
 
     if (!ethereum) {
       console.log("Make sure you have metamask!");
@@ -96,6 +95,8 @@ const App = () => {
           signer
         );
 
+        let totalMinted = await connectedContract.getTotalNFTsMintedSoFar();
+        setTotalMintCount(totalMinted);
         // THIS IS THE MAGIC SAUCE.
         // This will essentially "capture" our event when our contract throws it.
         // If you're familiar with webhooks, it's very similar to that!
@@ -131,6 +132,10 @@ const App = () => {
 
         console.log("Going to pop wallet now to pay gas...");
         let nftTxn = await connectedContract.makeColor();
+
+        let totalMinted = await connectedContract.getTotalNFTsMintedSoFar();
+        setTotalMintCount(totalMinted);
+        console.log(`Total NFTs Minted: ${totalMinted}`);
 
         console.log("Minting...please wait.");
         setIsLoading(true);
@@ -182,6 +187,9 @@ const App = () => {
         <div className="header-container">
           <p className="header gradient-text">colors.</p>
           <p className="sub-text">100% onchain. 100% colors. </p>
+          <p className="mint-count">
+            {Number(totalMintCount) + 1}/{TOTAL_MINT_COUNT} NFTs minted so far
+          </p>
           {currentAccount === ""
             ? renderNotConnectedContainer()
             : renderMintUI()}

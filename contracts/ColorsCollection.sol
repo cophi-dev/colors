@@ -70,6 +70,10 @@ contract ColorsCollection is ERC721URIStorage {
       return uint256(keccak256(abi.encodePacked(input)));
   }
 
+    function getTotalNFTsMintedSoFar () external view returns (uint256) {
+        return _tokenIds.current() - 1;
+    }
+
   // A function our user will hit to get their NFT.
   function makeColor() public {
      // Get the current tokenId, this starts at 0.
@@ -104,11 +108,6 @@ contract ColorsCollection is ERC721URIStorage {
             )
         )
     );
-
-    
-      function getTotalNFTsMintedSoFar() public view returns(uint256) {
-    return _tokenIds.current();
- }
 
  // Just like before, we prepend data:application/json;base64, to our data.
     string memory finalTokenUri = string(

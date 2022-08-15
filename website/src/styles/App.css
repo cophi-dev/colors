@@ -34,7 +34,7 @@
 }
 
 .gradient-text {
-  background: -webkit-linear-gradient(left, #7d7166 30%, #c9c9c9 60%);
+  background: -webkit-linear-gradient(left, #7d7166 30%, #7d7166 60%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -73,7 +73,7 @@
 }
 
 .mint-count {
-  color: white;
+  color: #7d7166;
   font-size: 18px;
   font-weight: bold;
 }
@@ -88,7 +88,7 @@
 .twitter-logo {
   width: 35px;
   height: 35px;
-  background: white;
+  background: #fffaf6;
   border-radius: 50%;
   margin-right: 1rem;
 }
